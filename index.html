@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <title>Savings Calculator</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <meta name="description" content="This free savings calculator considers the initial and ending balances, interest rate, and investment time when evaluating various investment circumstances.">
+    <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" href="./assets/css/input.css" />
+    <link rel="stylesheet" href="./assets/css/result.css" />
+    <script defer src="./assets/js/app.js"></script>
+</head>
+
+<body>
+    <div class="calculator-settings">
+        <div class="calculator-setting" id="calculator_form">
+            <p class="table-cell table-cell--dark table-cell--only-title">Savings Calculator</p>
+            <div class="calculator-content col">
+                <div class="input-wrapper row">
+                    <label class="input col ">
+                        <div class="dropdown-wrapper">
+                            <div class="input-field row " tabindex="0">
+                                <select class="input-field__text" onchange="toggleCalculationType(this)" id="loan_type">
+                                    <option value="End Amount"> How much will I have? </option>
+                                    <option value="Monthly Contribution"> How much do I need to contribute to reach my savings goal? </option>
+                                    <option value="Interest Rate"> What interest rate do I need to reach my savings goal? </option>
+                                    <option value="Lump Sum Amount"> How much would I need to invest initially to reach my savings goal? </option>
+                                    <option value="Investment Term"> How long will I need to invest to reach my savings goal? </option>
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-to-loan_type-0">
+                    <label class="input col  ">
+                        <p class="input__title">Lump Sum Amount</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="starting_amount" value="5000" oninput="forceNumeric(this)" />
+                        </div>
+                    </label> <label class="input col  ">
+                        <p class="input__title">Investment Term</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="after" value="10" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">years</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-to-loan_type-0">
+                    <label class="input col  ">
+                        <p class="input__title">Interest Rate</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="return_rate" value="8" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">%</span>
+                        </div>
+                    </label> <label class="input col ">
+                        <p class="input__title">Compound</p>
+                        <div class="dropdown-wrapper">
+                            <div class="input-field row " tabindex="0">
+                                <select class="input-field__text" onchange="toggleRelatedInputs(this)" id="compound">
+                                    <option value="Monthly (APR)"> Monthly (APR) </option>
+                                    <option value="Semi-Annually"> Semi-Annually </option>
+                                    <option value="Quarterly"> Quarterly </option>
+                                    <option value="Semi-Monthly"> Semi-Monthly </option>
+                                    <option value="Biweekly"> Biweekly </option>
+                                    <option value="Weekly"> Weekly </option>
+                                    <option value="Daily"> Daily </option>
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-to-loan_type-0">
+                    <label class="input col  ">
+                        <p class="input__title">Monthly Contribution</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="additional_contribution" value="500" oninput="forceNumeric(this)" />
+                        </div>
+                    </label>
+                    <label class="input col">
+                        <p class="input__title">Annual Increase</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="annual_increase" value="5" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">%</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-1">
+                    <label class="input col  ">
+                        <p class="input__title">Savings Goal</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="your_target_2" value="125000" oninput="forceNumeric(this)" />
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-1">
+                    <label class="input col  ">
+                        <p class="input__title">Lump Sum Amount</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="starting_amount_2" value="5000" oninput="forceNumeric(this)" />
+                        </div>
+                    </label> <label class="input col  ">
+                        <p class="input__title">Investment Term</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="after_2" value="10" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">years</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-1">
+                    <label class="input col  ">
+                        <p class="input__title">Interest Rate</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="return_rate_2" value="8" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">%</span>
+                        </div>
+                    </label> <label class="input col ">
+                        <p class="input__title">Compound</p>
+                        <div class="dropdown-wrapper">
+                            <div class="input-field row " tabindex="0">
+                                <select class="input-field__text" onchange="toggleRelatedInputs(this)" id="compound_2">
+                                    <option value="Monthly (APR)"> Monthly (APR) </option>
+                                    <option value="Semi-Annually"> Semi-Annually </option>
+                                    <option value="Quarterly"> Quarterly </option>
+                                    <option value="Semi-Monthly"> Semi-Monthly </option>
+                                    <option value="Biweekly"> Biweekly </option>
+                                    <option value="Weekly"> Weekly </option>
+                                    <option value="Daily"> Daily </option>
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-1">
+                    <label class="input col">
+                        <p class="input__title">Annual Increase</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="annual_increase_2" value="5" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">%</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-2">
+                    <label class="input col  ">
+                        <p class="input__title">Savings Goal</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="your_target_3" value="125000" oninput="forceNumeric(this)" />
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-2">
+                    <label class="input col  ">
+                        <p class="input__title">Lump Sum Amount</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="starting_amount_3" value="5000" oninput="forceNumeric(this)" />
+                        </div>
+                    </label> <label class="input col  ">
+                        <p class="input__title">Investment Term</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="after_3" value="10" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">years</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-2">
+                    <label class="input col ">
+                        <p class="input__title">Compound</p>
+                        <div class="dropdown-wrapper">
+                            <div class="input-field row " tabindex="0">
+                                <select class="input-field__text" onchange="toggleRelatedInputs(this)" id="compound_3">
+                                    <option value="Monthly (APR)"> Monthly (APR) </option>
+                                    <option value="Semi-Annually"> Semi-Annually </option>
+                                    <option value="Quarterly"> Quarterly </option>
+                                    <option value="Semi-Monthly"> Semi-Monthly </option>
+                                    <option value="Biweekly"> Biweekly </option>
+                                    <option value="Weekly"> Weekly </option>
+                                    <option value="Daily"> Daily </option>
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-2">
+                    <label class="input col  ">
+                        <p class="input__title">Monthly Contribution</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="additional_contribution_3" value="500" oninput="forceNumeric(this)" />
+                        </div>
+                    </label>
+                    <label class="input col">
+                        <p class="input__title">Annual Increase</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="annual_increase_3" value="5" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">%</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-3">
+                    <label class="input col  ">
+                        <p class="input__title">Savings Goal</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="your_target_4" value="125000" oninput="forceNumeric(this)" />
+                        </div>
+                    </label> <label class="input col  ">
+                        <p class="input__title">Investment Term</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="after_4" value="10" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">years</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-3">
+                    <label class="input col  ">
+                        <p class="input__title">Interest Rate</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="return_rate_4" value="8" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">%</span>
+                        </div>
+                    </label> <label class="input col ">
+                        <p class="input__title">Compound</p>
+                        <div class="dropdown-wrapper">
+                            <div class="input-field row " tabindex="0">
+                                <select class="input-field__text" onchange="toggleRelatedInputs(this)" id="compound_4">
+                                    <option value="Monthly (APR)"> Monthly (APR) </option>
+                                    <option value="Semi-Annually"> Semi-Annually </option>
+                                    <option value="Quarterly"> Quarterly </option>
+                                    <option value="Semi-Monthly"> Semi-Monthly </option>
+                                    <option value="Biweekly"> Biweekly </option>
+                                    <option value="Weekly"> Weekly </option>
+                                    <option value="Daily"> Daily </option>
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-3">
+                    <label class="input col  ">
+                        <p class="input__title">Monthly Contribution</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="additional_contribution_4" value="500" oninput="forceNumeric(this)" />
+                        </div>
+                    </label>
+                    <label class="input col">
+                        <p class="input__title">Annual Increase</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="annual_increase_4" value="5" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">%</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-4">
+                    <label class="input col  ">
+                        <p class="input__title">Savings Goal</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="your_target_5" value="125000" oninput="forceNumeric(this)" />
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-4">
+                    <label class="input col  ">
+                        <p class="input__title">Lump Sum Amount</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="starting_amount_5" value="5000" oninput="forceNumeric(this)" />
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-4">
+                    <label class="input col  ">
+                        <p class="input__title">Interest Rate</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="return_rate_5" value="8" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">%</span>
+                        </div>
+                    </label> <label class="input col ">
+                        <p class="input__title">Compound</p>
+                        <div class="dropdown-wrapper">
+                            <div class="input-field row " tabindex="0">
+                                <select class="input-field__text" onchange="toggleRelatedInputs(this)" id="compound_5">
+                                    <option value="Monthly (APR)"> Monthly (APR) </option>
+                                    <option value="Semi-Annually"> Semi-Annually </option>
+                                    <option value="Quarterly"> Quarterly </option>
+                                    <option value="Semi-Monthly"> Semi-Monthly </option>
+                                    <option value="Biweekly"> Biweekly </option>
+                                    <option value="Weekly"> Weekly </option>
+                                    <option value="Daily"> Daily </option>
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row loan_type related-item-hidden related-to-loan_type-4">
+                    <label class="input col  ">
+                        <p class="input__title">Monthly Contribution</p>
+                        <div class="input-field row">
+                            <span class="input-field__hint">R</span>
+                            <input type="text" class="input-field__input" placeholder id="additional_contribution_5" value="500" oninput="forceNumeric(this)" />
+                        </div>
+                    </label>
+                    <label class="input col">
+                        <p class="input__title">Annual Increase</p>
+                        <div class="input-field row">
+                            <input type="text" class="input-field__input" placeholder id="annual_increase_5" value="5" oninput="forceNumeric(this)" />
+                            <span class="input-field__hint">%</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="input-wrapper row">
+                    <div class="button--primary__wrapper">
+                        <button class="button button--primary ml-auto" onclick="calculate(this)">Calculate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="calculator-result calculator-result--error col" id="error-box">
+        <div class="row">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM8.70711
+                                7.29289C8.31658 6.90237 7.68342 6.90237 7.29289 7.29289C6.90237 7.68342 6.90237 8.31658 7.29289 8.70711L8.58579 10L7.29289 11.2929C6.90237 11.6834 6.90237 12.3166 7.29289
+                                12.7071C7.68342 13.0976 8.31658 13.0976 8.70711 12.7071L10 11.4142L11.2929 12.7071C11.6834 13.0976 12.3166 13.0976 12.7071 12.7071C13.0976 12.3166 13.0976 11.6834 12.7071
+                                11.2929L11.4142 10L12.7071 8.70711C13.0976 8.31658 13.0976 7.68342 12.7071 7.29289C12.3166 6.90237 11.6834 6.90237 11.2929 7.29289L10 8.58579L8.70711 7.29289Z" fill="#F87171" class="dark:fill-red-200"></path>
+            </svg>
+            <p class="calculator-error__title">There was an error with your calculation.</p>
+        </div>
+        <div class="col" id="error-list"></div>
+    </div>
+    <span id="calculator_result">
+        <div class="calculator-result col">
+            <p class="table-cell table-cell--dark table-cell--only-title">Investment Results</p>
+            <div class="table-cell table-cell--age table-cell--only row">
+                <div class="col chart__text loan_type related-to-loan_type-0">
+                    <p class="result-text" id="resultA-1">End Balance: R 123,278.22</p>
+                    <p class="result-text result-text--small-loan" id="resultA-2">Total Principal: R 80,467.36</p>
+                    <p class="result-text result-text--small-loan" id="resultA-3">Total Interest: R 42,810.87</p>
+                </div>
+                <div class="col chart__text loan_type related-item-hidden related-to-loan_type-1">
+                    <p class="result-text" id="resultB-1"></p>
+                    <p class="result-text result-text--small-loan" id="resultB"></p>
+                    <p class="result-text result-text--small-loan" id="resultB-2"></p>
+                    <p class="result-text result-text--small-loan" id="resultB-3"></p>
+                </div>
+                <div class="col chart__text loan_type related-item-hidden related-to-loan_type-2">
+                    <p class="result-text" id="resultC-1"></p>
+                    <p class="result-text result-text--small-loan" id="resultC"></p>
+                    <p class="result-text result-text--small-loan" id="resultC-2"></p>
+                    <p class="result-text result-text--small-loan" id="resultC-3"></p>
+                </div>
+                <div class="col chart__text loan_type related-item-hidden related-to-loan_type-3">
+                    <p class="result-text" id="resultD-1"></p>
+                    <p class="result-text result-text--small-loan" id="resultD"></p>
+                    <p class="result-text result-text--small-loan" id="resultD-2"></p>
+                    <p class="result-text result-text--small-loan" id="resultD-3"></p>
+                </div>
+                <div class="col chart__text loan_type related-item-hidden related-to-loan_type-4">
+                    <p class="result-text" id="resultE-1"></p>
+                    <p class="result-text result-text--small-loan" id="resultE"></p>
+                    <p class="result-text result-text--small-loan" id="resultE-2"></p>
+                    <p class="result-text result-text--small-loan" id="resultE-3"></p>
+                </div>
+                <div class="chart-wrapper chart-wrapper--donut chart-wrapper--donut-row">
+                    <canvas id="chartDonutBig" class="chart chart--donut" width="220px" height="220px"></canvas>
+                    <div class="chart__donut-legend chart__donut-legend--col">
+                        <div class="chart__donut-legend-item">
+                            <div class="result-chart result-chart--secondary"></div>
+                            <p class="result-text result-text--small">Interest</p>
+                        </div>
+                        <div class="chart__donut-legend-item">
+                            <div class="result-chart result-chart--primary-light"></div>
+                            <p class="result-text result-text--small">Contributions</p>
+                        </div>
+                        <div class="chart__donut-legend-item">
+                            <div class="result-chart result-chart--primary"></div>
+                            <p class="result-text result-text--small">Lump Sum</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-wrapper chart-wrapper--loan chart-wrapper--padding-horizontal">
+                <canvas id="chartLoan" class="chart chart--loan" height="524px"></canvas>
+                <div class="chart__legend"></div>
+            </div>
+            <div class="result-table__dialog result-table__dialog--active ">
+                <button class="result-table__open">
+                    <p class="result-table__open-text">Yearly Investment Figures</p>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 7.29289C5.68342 6.90237 6.31658 6.90237 6.7071 7.29289L9.99999 10.5858L13.2929 7.29289C13.6834 6.90237 14.3166 6.90237 14.7071 7.29289C15.0976 7.68342 15.0976 8.31658 14.7071 8.70711L10.7071 12.7071C10.3166 13.0976 9.68341 13.0976 9.29289 12.7071L5.29289 8.70711C4.90237 8.31658 4.90237 7.68342 5.29289 7.29289Z" fill="#FFFFFF"></path>
+                    </svg>
+                </button>
+                <div class="result-table__wrapper">
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th class="white text-center">№</th>
+                                <th class="white">BEGINNING BALANCE</th>
+                                <th class="white">CONTRIBUTION</th>
+                                <th class="white">INTEREST</th>
+                                <th class="white">ENDING BALANCE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="annual-results">
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>R 5,000.00</td>
+                                <td>R 6,000.00</td>
+                                <td>R 681.46</td>
+                                <td>R 11,681.46</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>R 11,681.46</td>
+                                <td>R 6,300.00</td>
+                                <td>R 1,249.34</td>
+                                <td>R 19,230.80</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td>R 19,230.80</td>
+                                <td>R 6,615.00</td>
+                                <td>R 1,889.92</td>
+                                <td>R 27,735.72</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td>R 27,735.72</td>
+                                <td>R 6,945.75</td>
+                                <td>R 2,610.52</td>
+                                <td>R 37,291.99</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">5</td>
+                                <td>R 37,291.99</td>
+                                <td>R 7,293.04</td>
+                                <td>R 3,419.10</td>
+                                <td>R 48,004.13</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">6</td>
+                                <td>R 48,004.13</td>
+                                <td>R 7,657.69</td>
+                                <td>R 4,324.40</td>
+                                <td>R 59,986.22</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">7</td>
+                                <td>R 59,986.22</td>
+                                <td>R 8,040.57</td>
+                                <td>R 5,335.91</td>
+                                <td>R 73,362.71</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">8</td>
+                                <td>R 73,362.71</td>
+                                <td>R 8,442.60</td>
+                                <td>R 6,464.01</td>
+                                <td>R 88,269.32</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">9</td>
+                                <td>R 88,269.32</td>
+                                <td>R 8,864.73</td>
+                                <td>R 7,720.00</td>
+                                <td>R 104,854.05</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">10</td>
+                                <td>R 104,854.05</td>
+                                <td>R 9,307.97</td>
+                                <td>R 9,116.21</td>
+                                <td>R 123,278.22</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="result-table__dialog">
+                <button class="result-table__open">
+                    <p class="result-table__open-text">Monthly Investment Figures</p>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 7.29289C5.68342 6.90237 6.31658 6.90237 6.7071 7.29289L9.99999 10.5858L13.2929 7.29289C13.6834 6.90237 14.3166 6.90237 14.7071 7.29289C15.0976 7.68342 15.0976 8.31658 14.7071 8.70711L10.7071 12.7071C10.3166 13.0976 9.68341 13.0976 9.29289 12.7071L5.29289 8.70711C4.90237 8.31658 4.90237 7.68342 5.29289 7.29289Z" fill="#FFFFFF"></path>
+                    </svg>
+                </button>
+                <div class="result-table__wrapper">
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th class="white text-center">№</th>
+                                <th class="white">BEGINNING BALANCE</th>
+                                <th class="white">CONTRIBUTION</th>
+                                <th class="white">INTEREST</th>
+                                <th class="white">ENDING BALANCE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthly-results">
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>R 5,000.00</td>
+                                <td>R 500.00</td>
+                                <td>R 36.67</td>
+                                <td>R 5,536.67</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>R 5,536.67</td>
+                                <td>R 500.00</td>
+                                <td>R 40.24</td>
+                                <td>R 6,076.91</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td>R 6,076.91</td>
+                                <td>R 500.00</td>
+                                <td>R 43.85</td>
+                                <td>R 6,620.76</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td>R 6,620.76</td>
+                                <td>R 500.00</td>
+                                <td>R 47.47</td>
+                                <td>R 7,168.23</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">5</td>
+                                <td>R 7,168.23</td>
+                                <td>R 500.00</td>
+                                <td>R 51.12</td>
+                                <td>R 7,719.35</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">6</td>
+                                <td>R 7,719.35</td>
+                                <td>R 500.00</td>
+                                <td>R 54.80</td>
+                                <td>R 8,274.15</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">7</td>
+                                <td>R 8,274.15</td>
+                                <td>R 500.00</td>
+                                <td>R 58.49</td>
+                                <td>R 8,832.64</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">8</td>
+                                <td>R 8,832.64</td>
+                                <td>R 500.00</td>
+                                <td>R 62.22</td>
+                                <td>R 9,394.86</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">9</td>
+                                <td>R 9,394.86</td>
+                                <td>R 500.00</td>
+                                <td>R 65.97</td>
+                                <td>R 9,960.82</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">10</td>
+                                <td>R 9,960.82</td>
+                                <td>R 500.00</td>
+                                <td>R 69.74</td>
+                                <td>R 10,530.56</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">11</td>
+                                <td>R 10,530.56</td>
+                                <td>R 500.00</td>
+                                <td>R 73.54</td>
+                                <td>R 11,104.10</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">12</td>
+                                <td>R 11,104.10</td>
+                                <td>R 500.00</td>
+                                <td>R 77.36</td>
+                                <td>R 11,681.46</td>
+                            </tr>
+                            <tr>
+                                <th class="white text-center" colspan="5">Year #1 End</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center">13</td>
+                                <td>R 11,681.46</td>
+                                <td>R 525.00</td>
+                                <td>R 81.38</td>
+                                <td>R 12,287.84</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">14</td>
+                                <td>R 12,287.84</td>
+                                <td>R 525.00</td>
+                                <td>R 85.42</td>
+                                <td>R 12,898.26</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">15</td>
+                                <td>R 12,898.26</td>
+                                <td>R 525.00</td>
+                                <td>R 89.49</td>
+                                <td>R 13,512.74</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">16</td>
+                                <td>R 13,512.74</td>
+                                <td>R 525.00</td>
+                                <td>R 93.58</td>
+                                <td>R 14,131.33</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">17</td>
+                                <td>R 14,131.33</td>
+                                <td>R 525.00</td>
+                                <td>R 97.71</td>
+                                <td>R 14,754.04</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">18</td>
+                                <td>R 14,754.04</td>
+                                <td>R 525.00</td>
+                                <td>R 101.86</td>
+                                <td>R 15,380.90</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">19</td>
+                                <td>R 15,380.90</td>
+                                <td>R 525.00</td>
+                                <td>R 106.04</td>
+                                <td>R 16,011.94</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">20</td>
+                                <td>R 16,011.94</td>
+                                <td>R 525.00</td>
+                                <td>R 110.25</td>
+                                <td>R 16,647.18</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">21</td>
+                                <td>R 16,647.18</td>
+                                <td>R 525.00</td>
+                                <td>R 114.48</td>
+                                <td>R 17,286.66</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">22</td>
+                                <td>R 17,286.66</td>
+                                <td>R 525.00</td>
+                                <td>R 118.74</td>
+                                <td>R 17,930.41</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">23</td>
+                                <td>R 17,930.41</td>
+                                <td>R 525.00</td>
+                                <td>R 123.04</td>
+                                <td>R 18,578.45</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">24</td>
+                                <td>R 18,578.45</td>
+                                <td>R 525.00</td>
+                                <td>R 127.36</td>
+                                <td>R 19,230.80</td>
+                            </tr>
+                            <tr>
+                                <th class="white text-center" colspan="5">Year #2 End</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center">25</td>
+                                <td>R 19,230.80</td>
+                                <td>R 551.25</td>
+                                <td>R 131.88</td>
+                                <td>R 19,913.93</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">26</td>
+                                <td>R 19,913.93</td>
+                                <td>R 551.25</td>
+                                <td>R 136.43</td>
+                                <td>R 20,601.62</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">27</td>
+                                <td>R 20,601.62</td>
+                                <td>R 551.25</td>
+                                <td>R 141.02</td>
+                                <td>R 21,293.89</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">28</td>
+                                <td>R 21,293.89</td>
+                                <td>R 551.25</td>
+                                <td>R 145.63</td>
+                                <td>R 21,990.77</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">29</td>
+                                <td>R 21,990.77</td>
+                                <td>R 551.25</td>
+                                <td>R 150.28</td>
+                                <td>R 22,692.30</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">30</td>
+                                <td>R 22,692.30</td>
+                                <td>R 551.25</td>
+                                <td>R 154.96</td>
+                                <td>R 23,398.51</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">31</td>
+                                <td>R 23,398.51</td>
+                                <td>R 551.25</td>
+                                <td>R 159.67</td>
+                                <td>R 24,109.42</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">32</td>
+                                <td>R 24,109.42</td>
+                                <td>R 551.25</td>
+                                <td>R 164.40</td>
+                                <td>R 24,825.08</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">33</td>
+                                <td>R 24,825.08</td>
+                                <td>R 551.25</td>
+                                <td>R 169.18</td>
+                                <td>R 25,545.50</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">34</td>
+                                <td>R 25,545.50</td>
+                                <td>R 551.25</td>
+                                <td>R 173.98</td>
+                                <td>R 26,270.73</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">35</td>
+                                <td>R 26,270.73</td>
+                                <td>R 551.25</td>
+                                <td>R 178.81</td>
+                                <td>R 27,000.79</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">36</td>
+                                <td>R 27,000.79</td>
+                                <td>R 551.25</td>
+                                <td>R 183.68</td>
+                                <td>R 27,735.72</td>
+                            </tr>
+                            <tr>
+                                <th class="white text-center" colspan="5">Year #3 End</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center">37</td>
+                                <td>R 27,735.72</td>
+                                <td>R 578.81</td>
+                                <td>R 188.76</td>
+                                <td>R 28,503.30</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">38</td>
+                                <td>R 28,503.30</td>
+                                <td>R 578.81</td>
+                                <td>R 193.88</td>
+                                <td>R 29,275.99</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">39</td>
+                                <td>R 29,275.99</td>
+                                <td>R 578.81</td>
+                                <td>R 199.03</td>
+                                <td>R 30,053.84</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">40</td>
+                                <td>R 30,053.84</td>
+                                <td>R 578.81</td>
+                                <td>R 204.22</td>
+                                <td>R 30,836.87</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">41</td>
+                                <td>R 30,836.87</td>
+                                <td>R 578.81</td>
+                                <td>R 209.44</td>
+                                <td>R 31,625.12</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">42</td>
+                                <td>R 31,625.12</td>
+                                <td>R 578.81</td>
+                                <td>R 214.69</td>
+                                <td>R 32,418.62</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">43</td>
+                                <td>R 32,418.62</td>
+                                <td>R 578.81</td>
+                                <td>R 219.98</td>
+                                <td>R 33,217.42</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">44</td>
+                                <td>R 33,217.42</td>
+                                <td>R 578.81</td>
+                                <td>R 225.31</td>
+                                <td>R 34,021.54</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">45</td>
+                                <td>R 34,021.54</td>
+                                <td>R 578.81</td>
+                                <td>R 230.67</td>
+                                <td>R 34,831.02</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">46</td>
+                                <td>R 34,831.02</td>
+                                <td>R 578.81</td>
+                                <td>R 236.07</td>
+                                <td>R 35,645.90</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">47</td>
+                                <td>R 35,645.90</td>
+                                <td>R 578.81</td>
+                                <td>R 241.50</td>
+                                <td>R 36,466.21</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">48</td>
+                                <td>R 36,466.21</td>
+                                <td>R 578.81</td>
+                                <td>R 246.97</td>
+                                <td>R 37,291.99</td>
+                            </tr>
+                            <tr>
+                                <th class="white text-center" colspan="5">Year #4 End</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center">49</td>
+                                <td>R 37,291.99</td>
+                                <td>R 607.75</td>
+                                <td>R 252.66</td>
+                                <td>R 38,152.41</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">50</td>
+                                <td>R 38,152.41</td>
+                                <td>R 607.75</td>
+                                <td>R 258.40</td>
+                                <td>R 39,018.56</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">51</td>
+                                <td>R 39,018.56</td>
+                                <td>R 607.75</td>
+                                <td>R 264.18</td>
+                                <td>R 39,890.49</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">52</td>
+                                <td>R 39,890.49</td>
+                                <td>R 607.75</td>
+                                <td>R 269.99</td>
+                                <td>R 40,768.23</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">53</td>
+                                <td>R 40,768.23</td>
+                                <td>R 607.75</td>
+                                <td>R 275.84</td>
+                                <td>R 41,651.82</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">54</td>
+                                <td>R 41,651.82</td>
+                                <td>R 607.75</td>
+                                <td>R 281.73</td>
+                                <td>R 42,541.31</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">55</td>
+                                <td>R 42,541.31</td>
+                                <td>R 607.75</td>
+                                <td>R 287.66</td>
+                                <td>R 43,436.72</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">56</td>
+                                <td>R 43,436.72</td>
+                                <td>R 607.75</td>
+                                <td>R 293.63</td>
+                                <td>R 44,338.10</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">57</td>
+                                <td>R 44,338.10</td>
+                                <td>R 607.75</td>
+                                <td>R 299.64</td>
+                                <td>R 45,245.50</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">58</td>
+                                <td>R 45,245.50</td>
+                                <td>R 607.75</td>
+                                <td>R 305.69</td>
+                                <td>R 46,158.94</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">59</td>
+                                <td>R 46,158.94</td>
+                                <td>R 607.75</td>
+                                <td>R 311.78</td>
+                                <td>R 47,078.47</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">60</td>
+                                <td>R 47,078.47</td>
+                                <td>R 607.75</td>
+                                <td>R 317.91</td>
+                                <td>R 48,004.13</td>
+                            </tr>
+                            <tr>
+                                <th class="white text-center" colspan="5">Year #5 End</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center">61</td>
+                                <td>R 48,004.13</td>
+                                <td>R 638.14</td>
+                                <td>R 324.28</td>
+                                <td>R 48,966.55</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">62</td>
+                                <td>R 48,966.55</td>
+                                <td>R 638.14</td>
+                                <td>R 330.70</td>
+                                <td>R 49,935.39</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">63</td>
+                                <td>R 49,935.39</td>
+                                <td>R 638.14</td>
+                                <td>R 337.16</td>
+                                <td>R 50,910.69</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">64</td>
+                                <td>R 50,910.69</td>
+                                <td>R 638.14</td>
+                                <td>R 343.66</td>
+                                <td>R 51,892.49</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">65</td>
+                                <td>R 51,892.49</td>
+                                <td>R 638.14</td>
+                                <td>R 350.20</td>
+                                <td>R 52,880.83</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">66</td>
+                                <td>R 52,880.83</td>
+                                <td>R 638.14</td>
+                                <td>R 356.79</td>
+                                <td>R 53,875.77</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">67</td>
+                                <td>R 53,875.77</td>
+                                <td>R 638.14</td>
+                                <td>R 363.43</td>
+                                <td>R 54,877.34</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">68</td>
+                                <td>R 54,877.34</td>
+                                <td>R 638.14</td>
+                                <td>R 370.10</td>
+                                <td>R 55,885.58</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">69</td>
+                                <td>R 55,885.58</td>
+                                <td>R 638.14</td>
+                                <td>R 376.82</td>
+                                <td>R 56,900.54</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">70</td>
+                                <td>R 56,900.54</td>
+                                <td>R 638.14</td>
+                                <td>R 383.59</td>
+                                <td>R 57,922.28</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">71</td>
+                                <td>R 57,922.28</td>
+                                <td>R 638.14</td>
+                                <td>R 390.40</td>
+                                <td>R 58,950.82</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">72</td>
+                                <td>R 58,950.82</td>
+                                <td>R 638.14</td>
+                                <td>R 397.26</td>
+                                <td>R 59,986.22</td>
+                            </tr>
+                            <tr>
+                                <th class="white text-center" colspan="5">Year #6 End</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center">73</td>
+                                <td>R 59,986.22</td>
+                                <td>R 670.05</td>
+                                <td>R 404.38</td>
+                                <td>R 61,060.64</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">74</td>
+                                <td>R 61,060.64</td>
+                                <td>R 670.05</td>
+                                <td>R 411.54</td>
+                                <td>R 62,142.23</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">75</td>
+                                <td>R 62,142.23</td>
+                                <td>R 670.05</td>
+                                <td>R 418.75</td>
+                                <td>R 63,231.03</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">76</td>
+                                <td>R 63,231.03</td>
+                                <td>R 670.05</td>
+                                <td>R 426.01</td>
+                                <td>R 64,327.08</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">77</td>
+                                <td>R 64,327.08</td>
+                                <td>R 670.05</td>
+                                <td>R 433.31</td>
+                                <td>R 65,430.44</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">78</td>
+                                <td>R 65,430.44</td>
+                                <td>R 670.05</td>
+                                <td>R 440.67</td>
+                                <td>R 66,541.16</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">79</td>
+                                <td>R 66,541.16</td>
+                                <td>R 670.05</td>
+                                <td>R 448.07</td>
+                                <td>R 67,659.28</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">80</td>
+                                <td>R 67,659.28</td>
+                                <td>R 670.05</td>
+                                <td>R 455.53</td>
+                                <td>R 68,784.86</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">81</td>
+                                <td>R 68,784.86</td>
+                                <td>R 670.05</td>
+                                <td>R 463.03</td>
+                                <td>R 69,917.94</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">82</td>
+                                <td>R 69,917.94</td>
+                                <td>R 670.05</td>
+                                <td>R 470.59</td>
+                                <td>R 71,058.57</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">83</td>
+                                <td>R 71,058.57</td>
+                                <td>R 670.05</td>
+                                <td>R 478.19</td>
+                                <td>R 72,206.81</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">84</td>
+                                <td>R 72,206.81</td>
+                                <td>R 670.05</td>
+                                <td>R 485.85</td>
+                                <td>R 73,362.71</td>
+                            </tr>
+                            <tr>
+                                <th class="white text-center" colspan="5">Year #7 End</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center">85</td>
+                                <td>R 73,362.71</td>
+                                <td>R 703.55</td>
+                                <td>R 493.78</td>
+                                <td>R 74,560.03</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">86</td>
+                                <td>R 74,560.03</td>
+                                <td>R 703.55</td>
+                                <td>R 501.76</td>
+                                <td>R 75,765.34</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">87</td>
+                                <td>R 75,765.34</td>
+                                <td>R 703.55</td>
+                                <td>R 509.79</td>
+                                <td>R 76,978.68</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">88</td>
+                                <td>R 76,978.68</td>
+                                <td>R 703.55</td>
+                                <td>R 517.88</td>
+                                <td>R 78,200.11</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">89</td>
+                                <td>R 78,200.11</td>
+                                <td>R 703.55</td>
+                                <td>R 526.02</td>
+                                <td>R 79,429.69</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">90</td>
+                                <td>R 79,429.69</td>
+                                <td>R 703.55</td>
+                                <td>R 534.22</td>
+                                <td>R 80,667.46</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">91</td>
+                                <td>R 80,667.46</td>
+                                <td>R 703.55</td>
+                                <td>R 542.47</td>
+                                <td>R 81,913.48</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">92</td>
+                                <td>R 81,913.48</td>
+                                <td>R 703.55</td>
+                                <td>R 550.78</td>
+                                <td>R 83,167.81</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">93</td>
+                                <td>R 83,167.81</td>
+                                <td>R 703.55</td>
+                                <td>R 559.14</td>
+                                <td>R 84,430.51</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">94</td>
+                                <td>R 84,430.51</td>
+                                <td>R 703.55</td>
+                                <td>R 567.56</td>
+                                <td>R 85,701.62</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">95</td>
+                                <td>R 85,701.62</td>
+                                <td>R 703.55</td>
+                                <td>R 576.03</td>
+                                <td>R 86,981.20</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">96</td>
+                                <td>R 86,981.20</td>
+                                <td>R 703.55</td>
+                                <td>R 584.57</td>
+                                <td>R 88,269.32</td>
+                            </tr>
+                            <tr>
+                                <th class="white text-center" colspan="5">Year #8 End</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center">97</td>
+                                <td>R 88,269.32</td>
+                                <td>R 738.73</td>
+                                <td>R 593.39</td>
+                                <td>R 89,601.43</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">98</td>
+                                <td>R 89,601.43</td>
+                                <td>R 738.73</td>
+                                <td>R 602.27</td>
+                                <td>R 90,942.43</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">99</td>
+                                <td>R 90,942.43</td>
+                                <td>R 738.73</td>
+                                <td>R 611.21</td>
+                                <td>R 92,292.36</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">100</td>
+                                <td>R 92,292.36</td>
+                                <td>R 738.73</td>
+                                <td>R 620.21</td>
+                                <td>R 93,651.30</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">101</td>
+                                <td>R 93,651.30</td>
+                                <td>R 738.73</td>
+                                <td>R 629.27</td>
+                                <td>R 95,019.29</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">102</td>
+                                <td>R 95,019.29</td>
+                                <td>R 738.73</td>
+                                <td>R 638.39</td>
+                                <td>R 96,396.41</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">103</td>
+                                <td>R 96,396.41</td>
+                                <td>R 738.73</td>
+                                <td>R 647.57</td>
+                                <td>R 97,782.70</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">104</td>
+                                <td>R 97,782.70</td>
+                                <td>R 738.73</td>
+                                <td>R 656.81</td>
+                                <td>R 99,178.24</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">105</td>
+                                <td>R 99,178.24</td>
+                                <td>R 738.73</td>
+                                <td>R 666.11</td>
+                                <td>R 100,583.08</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">106</td>
+                                <td>R 100,583.08</td>
+                                <td>R 738.73</td>
+                                <td>R 675.48</td>
+                                <td>R 101,997.29</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">107</td>
+                                <td>R 101,997.29</td>
+                                <td>R 738.73</td>
+                                <td>R 684.91</td>
+                                <td>R 103,420.92</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">108</td>
+                                <td>R 103,420.92</td>
+                                <td>R 738.73</td>
+                                <td>R 694.40</td>
+                                <td>R 104,854.05</td>
+                            </tr>
+                            <tr>
+                                <th class="white text-center" colspan="5">Year #9 End</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center">109</td>
+                                <td>R 104,854.05</td>
+                                <td>R 775.66</td>
+                                <td>R 704.20</td>
+                                <td>R 106,333.91</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">110</td>
+                                <td>R 106,333.91</td>
+                                <td>R 775.66</td>
+                                <td>R 714.06</td>
+                                <td>R 107,823.64</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">111</td>
+                                <td>R 107,823.64</td>
+                                <td>R 775.66</td>
+                                <td>R 724.00</td>
+                                <td>R 109,323.30</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">112</td>
+                                <td>R 109,323.30</td>
+                                <td>R 775.66</td>
+                                <td>R 733.99</td>
+                                <td>R 110,832.95</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">113</td>
+                                <td>R 110,832.95</td>
+                                <td>R 775.66</td>
+                                <td>R 744.06</td>
+                                <td>R 112,352.68</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">114</td>
+                                <td>R 112,352.68</td>
+                                <td>R 775.66</td>
+                                <td>R 754.19</td>
+                                <td>R 113,882.53</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">115</td>
+                                <td>R 113,882.53</td>
+                                <td>R 775.66</td>
+                                <td>R 764.39</td>
+                                <td>R 115,422.58</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">116</td>
+                                <td>R 115,422.58</td>
+                                <td>R 775.66</td>
+                                <td>R 774.65</td>
+                                <td>R 116,972.90</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">117</td>
+                                <td>R 116,972.90</td>
+                                <td>R 775.66</td>
+                                <td>R 784.99</td>
+                                <td>R 118,533.55</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">118</td>
+                                <td>R 118,533.55</td>
+                                <td>R 775.66</td>
+                                <td>R 795.39</td>
+                                <td>R 120,104.61</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">119</td>
+                                <td>R 120,104.61</td>
+                                <td>R 775.66</td>
+                                <td>R 805.87</td>
+                                <td>R 121,686.15</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">120</td>
+                                <td>R 121,686.15</td>
+                                <td>R 775.66</td>
+                                <td>R 816.41</td>
+                                <td>R 123,278.22</td>
+                            </tr>
+                            <tr>
+                                <th class="white text-center" colspan="5">Year #10 End</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </span>
+</body>
+
+</html>
