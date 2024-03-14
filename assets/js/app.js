@@ -916,4 +916,10 @@ import("./lib/chartjs/chart.js").then(({ Chart, registerables }) => {
         output.val(annualResultsHtml).set('annual-results');
         output.val(monthlyResultsHtml).set('monthly-results');
     }
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if (urlParams.has('type')) {
+        toggleCalculationType(document.getElementById('loan_type'));
+    }
 })
