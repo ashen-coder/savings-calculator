@@ -15,6 +15,17 @@ This free savings calculator considers the initial and ending balances, interest
 
 * Add the shortcode `[ac_savings_calculator]` to your page, post or sidebar
 
+## Calculation Types
+
+Add `?type=<value>` to the url to set the calculation type of the calculator
+|value| calculation type|
+|-|-|
+| accumulation | How much will I have? |
+| contribution | How much do I need to contribute to reach my savings goal? |
+| interest-rate | What interest rate do I need to reach my savings goal? |
+| lump-sum | How much would I need to invest initially to reach my savings goal? |
+| investment-term | How long will I need to invest to reach my savings goal? |
+
 ## Libraries in Use
 
 1. [Chart.js](https://www.chartjs.org/)
