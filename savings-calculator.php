@@ -3,7 +3,7 @@
 Plugin Name: Savings Calculator
 Plugin URI: https://ashen-coder.github.io/savings-calculator/
 Description: This free savings calculator considers the initial and ending balances, interest rate, and investment time when evaluating various investment circumstances.
-Version: 1.0.0
+Version: 1.0.1
 Author: Ashen Coder
 Author URI: https://github.com/ashen-coder
 License: GPLv2 or later
@@ -26,7 +26,7 @@ function display_ac_savings_calculator(){
     $html_content = file_get_contents($plugin_dir_path . 'index.html');
 
     foreach ($scripts_and_styles as $filename) {
-        $link = plugins_url($filename, __FILE__);
+        $link = add_query_arg('ts', time(), plugins_url($filename, __FILE__));
         $html_content = str_replace('./' . $filename, $link, $html_content);
     }
 
