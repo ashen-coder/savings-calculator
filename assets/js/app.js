@@ -520,6 +520,17 @@ const tooltip = {
     },
 };
 
+const $monthlyFigures = document.getElementById('monthly-figures');
+const $showMonthlyFigures = document.getElementById('show-monthly-figures');
+
+$showMonthlyFigures.addEventListener('change', () => {
+    if ($showMonthlyFigures.checked) {
+        $monthlyFigures.classList.remove('hidden');
+    } else {
+        $monthlyFigures.classList.add('hidden');
+    }
+});
+
 import("./lib/chartjs/chart.js").then(({ Chart, registerables }) => {
     Chart.register(...registerables);
 
