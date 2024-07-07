@@ -306,8 +306,8 @@ function calculateAmortization(
     annualIncreaseRate = 0,
 ) {
     const months = Math.max(years * 12, 1);
-    const cc = compound / 12
-    const interest = rate / 100 / compound;
+    const cc = compound / 12;
+    const interest = Math.pow(1 + (rate / 100), 1 / compound) - 1;
     const ratePayB = Math.pow(1 + interest, cc) - 1;
 
     let amortization = [];
