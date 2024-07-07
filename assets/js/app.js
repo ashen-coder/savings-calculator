@@ -536,7 +536,11 @@ import("./lib/chartjs/chart.js").then(({ Chart, registerables }) => {
 
     const pieChartData = [
         {
-            data: [4, 61, 35],
+            data: [
+                4,
+                62,
+                34
+            ],
             backgroundColor: [colors.primary, colors.primaryLight, colors.secondary],
             borderColor: colors.primary,
             borderWidth: 0.5,
@@ -620,16 +624,16 @@ import("./lib/chartjs/chart.js").then(({ Chart, registerables }) => {
             {
                 label: 'Interest',
                 data: [
-                    681,
-                    1931,
-                    3821,
-                    6431,
-                    9850,
-                    14175,
-                    19511,
-                    25975,
-                    33695,
-                    42811
+                    657,
+                    1859,
+                    3675,
+                    6180,
+                    9456,
+                    13592,
+                    18689,
+                    24854,
+                    32205,
+                    40873
                 ],
                 order: 3,
                 backgroundColor: colors.secondary,
