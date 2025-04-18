@@ -58,11 +58,33 @@
                         </div>
                     </label>
                 </div>
+                <div class="input-wrapper row">
+                    <label class="input col ">
+                        <p class="input__title">Currency</p>
+                        <div class="dropdown-wrapper">
+                            <div class="input-field row " tabindex="0">
+                                <select class="input-field__text" id="currency">
+                                    <option value="ZAR"> South African Rand (ZAR) </option>
+                                    <option value="USD"> US Dollar (USD) </option>
+                                    <option value="EUR"> Euro (EUR) </option>
+                                    <option value="GBP"> British Pound (GBP) </option>
+                                    <option value="JPY"> Japanese Yen (JPY) </option>
+                                    <option value="CHF"> Swiss Franc (CHF) </option>
+                                    <option value="CAD"> Canadian Dollar (CAD) </option>
+                                    <option value="AUD"> Australian Dollar (AUD) </option>
+                                    <option value="CNY"> Chinese Yuan Renminbi (CNY) </option>
+                                    <option value="INR"> Indian Rupee (INR) </option>
+                                    <option value="AED"> UAE Dirham (AED) </option>
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                </div>
                 <div class="input-wrapper row loan_type related-to-loan_type-0">
                     <label class="input col  ">
                         <p class="input__title">Lump Sum Amount</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="starting_amount" value="5000" oninput="forceNumeric(this)" />
                         </div>
                     </label> <label class="input col  ">
@@ -86,7 +108,7 @@
                     <label class="input col  ">
                         <p class="input__title">Monthly Contribution</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="additional_contribution" value="500" oninput="forceNumeric(this)" />
                         </div>
                     </label>
@@ -102,7 +124,7 @@
                     <label class="input col  ">
                         <p class="input__title">Savings Goal</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="your_target_2" value="125000" oninput="forceNumeric(this)" />
                         </div>
                     </label>
@@ -111,7 +133,7 @@
                     <label class="input col  ">
                         <p class="input__title">Lump Sum Amount</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="starting_amount_2" value="5000" oninput="forceNumeric(this)" />
                         </div>
                     </label> <label class="input col  ">
@@ -144,7 +166,7 @@
                     <label class="input col  ">
                         <p class="input__title">Savings Goal</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="your_target_3" value="125000" oninput="forceNumeric(this)" />
                         </div>
                     </label>
@@ -153,7 +175,7 @@
                     <label class="input col  ">
                         <p class="input__title">Lump Sum Amount</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="starting_amount_3" value="5000" oninput="forceNumeric(this)" />
                         </div>
                     </label> <label class="input col  ">
@@ -168,7 +190,7 @@
                     <label class="input col  ">
                         <p class="input__title">Monthly Contribution</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="additional_contribution_3" value="500" oninput="forceNumeric(this)" />
                         </div>
                     </label>
@@ -184,7 +206,7 @@
                     <label class="input col  ">
                         <p class="input__title">Savings Goal</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="your_target_4" value="125000" oninput="forceNumeric(this)" />
                         </div>
                     </label> <label class="input col  ">
@@ -208,7 +230,7 @@
                     <label class="input col  ">
                         <p class="input__title">Monthly Contribution</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="additional_contribution_4" value="500" oninput="forceNumeric(this)" />
                         </div>
                     </label>
@@ -224,7 +246,7 @@
                     <label class="input col  ">
                         <p class="input__title">Savings Goal</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="your_target_5" value="125000" oninput="forceNumeric(this)" />
                         </div>
                     </label>
@@ -233,7 +255,7 @@
                     <label class="input col  ">
                         <p class="input__title">Lump Sum Amount</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="starting_amount_5" value="5000" oninput="forceNumeric(this)" />
                         </div>
                     </label>
@@ -251,7 +273,7 @@
                     <label class="input col  ">
                         <p class="input__title">Monthly Contribution</p>
                         <div class="input-field row">
-                            <span class="input-field__hint">R</span>
+                            <span class="input-field__hint input-field__currency">R</span>
                             <input type="text" class="input-field__input" placeholder id="additional_contribution_5" value="500" oninput="forceNumeric(this)" />
                         </div>
                     </label>

@@ -2,6 +2,9 @@
 
 console.log('Script is OK! ༼ つ ◕_◕ ༽つ');
 
+let currencySymbol = 'R';
+let showCurrencyDecimals = true;
+
 // DIALOG TABLE
 if (document.querySelector('.result-table__dialog')) {
     import('./dialog-table.js').then(e => {
@@ -287,9 +290,37 @@ function roundTo(num, decimals = 5) {
     return +(Math.round(num + `e+${decimals}`) + `e-${decimals}`);
 }
 
+/** @param {string} value */
+function getCurrencySymbol(value) {
+    switch (value) {
+        case 'USD':
+            return '$';
+        case 'EUR':
+            return '€';
+        case 'GBP':
+            return '£';
+        case 'JPY':
+            return '¥';
+        case 'CHF':
+            return 'CHF';
+        case 'CAD':
+            return 'C$';
+        case 'AUD':
+            return 'A$';
+        case 'CNY':
+            return '¥';
+        case 'INR':
+            return '₹';
+        case 'AED':
+            return 'AED';
+        case 'ZAR':
+        default:
+            return 'R';
+    }
+}
 
 function currencyFormat(num, space = '&nbsp') {
-    return `R${space}` + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    return `${currencySymbol}${space}` + num.toFixed(showCurrencyDecimals ? 2 : 0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
 const investmentTermError = 'The investment term must be greater than 0.';
@@ -522,6 +553,7 @@ const tooltip = {
 
 const $monthlyFigures = document.getElementById('monthly-figures');
 const $showMonthlyFigures = document.getElementById('show-monthly-figures');
+const $currency = /** @type {HTMLSelectElement} */ (document.getElementById('currency'));
 
 $showMonthlyFigures.addEventListener('change', () => {
     if ($showMonthlyFigures.checked) {
@@ -906,6 +938,18 @@ import("./lib/chartjs/chart.js").then(({ Chart, registerables }) => {
         output.val(annualResultsHtml).set('annual-results');
         output.val(monthlyResultsHtml).set('monthly-results');
     }
+
+    /**
+     * @param {Chart} primaryChart
+     */
+    const changeCurrency = () => {
+        currencySymbol = getCurrencySymbol($currency.value);
+        showCurrencyDecimals = $currency.value !== 'JPY';
+        document.querySelectorAll('.input-field__currency').forEach(el => el.textContent = currencySymbol);
+        calculate();
+    };
+
+    $currency.addEventListener('change', () => changeCurrency());
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
